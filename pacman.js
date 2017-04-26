@@ -79,6 +79,10 @@ function eatGhost(ghost) {
     lives -= 1;
     console.log(ghost.colour + ' ' + ghost.name + ' eat a Pac-Man');
     alive();
+  } else { //6a
+    console.log(ghost.name + 'was eaten!');
+    score += 200;
+    ghost.edible = false;
   }
 
 }
