@@ -30,11 +30,11 @@ var pinky = {
 };
 
 var clyde = {
-menu_option: '4',
-name: 'Clyde',
-colour: 'Orange',
-character: 'Pokey',
-edible: false
+  menu_option: '4',
+  name: 'Clyde',
+  colour: 'Orange',
+  character: 'Pokey',
+  edible: false
 };
 
 // replace this comment with your four ghosts setup as objects
@@ -64,9 +64,15 @@ function displayMenu() {
   if (powerPellets < 1) { //step 5d
     console.log('(p) Eat Power-Pellet');
   }
-   // step 5b
+
   for (var i=1; i <5; i++) {
-    console.log('(' + i + ') Eat ' + ghosts[i-1].name);
+    var eatable;
+    if (ghosts[i-1].edible === true) {
+      eatable = '(edible)';
+    } else {
+      eatable = '(inedible)';
+    }
+    console.log('(' + i + ') Eat ' + ghosts[i-1].name + ' ' + eatable);
   }
 
   console.log('(q) Quit');
