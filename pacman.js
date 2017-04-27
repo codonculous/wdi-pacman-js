@@ -1,7 +1,9 @@
 // Setup initial game stats
 var score = 0;
-var lives = 2;
+var lives = 4;
 var powerPellets = 4;
+var dots = 240;
+ 
 
 
 // Define your ghosts here
@@ -55,13 +57,22 @@ function clearScreen() {
 }
 
 function displayStats() {
-  console.log('Score: ' + score + '     Lives: ' + lives + '     Power Pellets: '  + powerPellets);
+  console.log('Score: ' + score + '     Lives: ' + lives + '     Power Pellets: '  + powerPellets + '     dots left: '  + dots);
 }
 
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
-  if (powerPellets < 1) { //step 5d
+
+  if (dots > 10) {
+    console.log('(x) Eat 10 Dot');
+  }
+
+  if (dots > 100) {
+  console.log('(h) Eat 100 Dot');
+  }
+
+  if (powerPellets > 0) { //step 5d
     console.log('(p) Eat Power-Pellet');
   }
 
@@ -110,7 +121,6 @@ function alive() {
 }
 
 
-
 function displayPrompt() {
   // process.stdout.write is similar to console.log except it doesn't add a new line after the text
   process.stdout.write('\nWaka Waka :v '); // :v is the Pac-Man emoji.
@@ -118,11 +128,17 @@ function displayPrompt() {
 
 
 // Menu Options
-function eatDot() {
+function eatDot(time) {
   console.log('\nChomp!');
-  score += 10;
-}
+  if (time === undefined) {
+    dots -= 1;
+    score += 10;
+  } else {
+    dots -= 1 * time;
+    score += 10 * time;
+  }
 
+}
 
 // Process Player's Input
 function processInput(key) {
@@ -134,17 +150,27 @@ function processInput(key) {
     case 'd':
       eatDot();
       break;
+    case 'x':
+      if (dots > 10) {
+      eatDot(10);
+      }
+      break;
+    case 'h':
+      if (dots > 100) {
+        eatDot(100);
+      }
+      break;
     case '1':
-      eatGhost(ghosts[1]);
+      eatGhost(ghosts[0]);
       break;
     case '2':
-      eatGhost(ghosts[2]);
+      eatGhost(ghosts[1]);
       break;
     case '3':
-      eatGhost(ghosts[3]);
+      eatGhost(ghosts[2]);
       break;
     case '4':
-      eatGhost(ghosts[4]);
+      eatGhost(ghosts[3]);
       break;
     case 'p':
       if (powerPellets < 1) {
@@ -176,7 +202,7 @@ drawScreen();
 stdin.on('data', function(key) {
   process.stdout.write(key);
   processInput(key);
-  setTimeout(drawScreen, 1000); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
+  setTimeout(drawScreen, 500); // The command prompt will flash a message for 300 milliseoncds before it re-draws the screen. You can adjust the 300 number to increase this.
 });
 
 // Player Quits
