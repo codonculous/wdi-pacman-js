@@ -3,7 +3,8 @@ var score = 0;
 var lives = 4;
 var powerPellets = 4;
 var dots = 240;
- 
+var nthGhost = 1;
+
 
 
 // Define your ghosts here
@@ -96,9 +97,10 @@ function eatGhost(ghost) {
     lives -= 1;
     console.log(ghost.colour + ' ' + ghost.name + ' eat a Pac-Man');
     alive();
-  } else { //6a
+  } else {
+    nthGhost *= 2;
+    score += 100*nthGhost;
     console.log(ghost.name + 'was eaten!');
-    score += 200;
     ghost.edible = false;
   }
 
